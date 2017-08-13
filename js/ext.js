@@ -1,3 +1,4 @@
+// Quick and easy element creation
 const c = (name, attrs = '', html = '', bindings = {}) => {
   let elem = document.createElement(name)
   for ([name, value] of Object.entries(attrs)) {
@@ -11,16 +12,70 @@ const c = (name, attrs = '', html = '', bindings = {}) => {
 }
 
 const idFromUrl = (url) => {
-  // stolen from megabot ;)
+  // Stolen from megabot ;)
   // https://github.com/SteamingMutt/DiscordFeedback/blob/master/Commands/Commands/uservoice.js#L7
   const uv = /https?:\/\/[\w.]+\/forums\/(\d{6,})-[\w-]+\/suggestions\/(\d{7,})(?:-[\w-]*)?/
 
   return url.match(uv)[2]
 }
 
+const help = `
+  <h1>How do I use this?</h1>
+  <p>
+    There are <strong>two modes</strong> the floating window can be in. The <strong>floating window</strong>
+    is the tiny box that you are looking at right now.
+  </p>
+  <h2>Dupe manager mode</h2>
+  <p>
+    This is the default mode. In this mode, you are shown the <strong>idea queue.</strong>
+    The idea queue is a list of Uservoice ideas that you will merge into the <strong>merging into idea</strong>.
+  </p>
+  <p>
+    To set the <strong>merging into idea</strong>, click the <code>*</code> button on an idea.
+    This is the idea that you will be merging all of the ideas in the idea queue into. That's why it's called
+    the <strong>merging into idea</strong>.
+  </p>
+  <p>
+    To add an idea to the idea queue, click the <code>+</code> button next to it. The floating window will
+    instantly update to show the newly added idea. To remove an idea from the idea queue, ensure that the
+    <strong>delete on click</strong> checkbox is selected. Then, hover over the idea you want to delete. It should
+    turn red. Then, click to delete the idea from the idea queue.
+  </p>
+  <h2>Delete on click</h2>
+  <p>
+    If this checkbox is ticked, clicking on any idea will remove it from the idea queue. If this checkbox is not ticked,
+    clicking on any idea will open the idea in a new tab. This checkbox is unticked by default and does not persist
+    between page loads. If an idea turns blue, it will open upon being clicked, and if an idea turns red, it will be
+    deleted upon being clicked. There is no confirmation preceding deletion.
+  </p>
+  <p>
+    Like ideas, the <strong>merging into idea</strong> can be opened by clicking, but cannot be deleted with
+    <strong>delete on click</strong>.
+  </p>
+  <h2>Command mode</h2>
+  <p>
+    This mode shows the commands you need to paste into #uv-reporting. Each line is a command. Note that the commands
+    may appear differently depending on if the <strong>shorten urls</strong> checkbox is ticked.
+  </p>
+  <h2>Shorten URLs</h2>
+  <p>
+    This checkbox will make all UV URLs only show the title slug and ID. In command mode, it will only output
+    UV idea IDs instead of URLs. MegaBot processes IDs correctly, so this checkbox only has visual effect.
+  </p>
+  <h2>Moving between modes</h2>
+  <p>
+    You can move between modes by clicking the <strong>"show commands"/"show dupe manager"</strong> button.
+  </p>
+  <h2>Help</h2>
+  <p>
+    Need help? Press the <code>?</code> button. While help is showing, nothing else will show. To hide help,
+    press the button again.
+  </p>
+`
+
 const template = `
   <div class="mega-manager">
-    <div class="mega-manager-contents" v-if="!hidden">
+    <div class="mega-manager-contents" v-if="!hidden && !help">
       <div class="dupe-manager" v-if="!showCommands">
         <div class="into">
           <span v-if="into" @click='openInto'>
@@ -55,8 +110,14 @@ const template = `
         </label>
       </div>
     </div>
+    <div class="help" v-if="help">
+      ${help}
+    </div>
     <button type="button" class="hide" @click="hidden = !hidden">
       {{ hidden ? 'Show' : 'Hide' }}
+    </button>
+    <button type="button" @click="help = !help">
+      ?
     </button>
   </div>
 `
@@ -70,6 +131,9 @@ let vm = new Vue({
 
     // Are we in the generated command view?
     showCommands: false,
+
+    // Is the help showing?
+    help: false,
 
     // Should UV URLs be shortened to IDs and or names only? (Applies both in the dupe manager
     // and in the generated command view)
@@ -120,20 +184,21 @@ function addDupe (url) {
     localStorage.dupes = '[]'
   }
 
-  // get existing dupes
+  // Get existing dupes
   let dupes = JSON.parse(localStorage.dupes)
 
-  // if it's already in there, bail
+  // If it's already in there, bail
   if (dupes.includes(url)) {
     return false
   }
 
-  // concat + save
+  // Concat dupes array + save
   dupes.push(url)
   localStorage.dupes = JSON.stringify(dupes)
+
+  // Update UI
   vm.dupes = dupes
 
-  console.info('megaext: added dupe: %s', url)
   return true
 }
 
@@ -186,6 +251,5 @@ const mega = {
   }
 }
 
-// once the page has loaded, load mega in 250 ms
-// we wait 250 ms to get uservoice to dynamically load all ideas
+// setup megaext once the page has finished loading
 window.addEventListener('load', mega.load.bind(mega))

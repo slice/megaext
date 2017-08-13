@@ -20,3 +20,7 @@ Megaext is a Google Chrome helper extension for Custodians in the Discord Feedba
 ![Floating window showcase](https://owo.sh/43f6af.png)
 ![Injected vote buttons](https://owo.sh/71836b.png)
 ![Command generator](https://owo.sh/2dad73.png)
+
+## Technologies used
+
+- Vue

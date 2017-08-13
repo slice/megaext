@@ -76,7 +76,18 @@ button.mega-button.set-into {
 }
 
 .hide {
-  display: block;
+  margin-right: 0.15rem;
+}
+
+.help p, .help h1, .help h2 {
+  margin: 0.35em 0;
+}
+.help h1, .help h2 {
+  font-weight: bold;
+  font-size: 1.3em;
+}
+.help h2 {
+  font-size: 1.1em;
 }
 
 /*#manager .dupe:hover:after {
