@@ -1,0 +1,30 @@
+{
+  "manifest_version": 2,
+
+  "name": "Megaext",
+  "description": "A helper extension for Custodians in Discord Feedback.",
+  "version": "0.0.0",
+
+  "icons": {
+    "16": "assets/megaext_16.png",
+    "48": "assets/megaext_48.png",
+    "128": "assets/megaext_128.png",
+    "512": "assets/megaext_512.png"
+  },
+
+  "browser_action": {
+    "default_icon": "assets/megaext_512.png"
+  },
+
+  "content_scripts": [
+    {
+      "matches": ["https://feedback.discordapp.com/*"],
+      "css": ["css/ext.css"],
+      "js": ["js/vue.js", "js/ext.js"]
+    }
+  ],
+
+  "permissions": [
+    "https://feedback.discordapp.com/"
+  ]
+}

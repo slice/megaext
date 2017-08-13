@@ -1,0 +1,93 @@
+button.mega-button {
+  position: absolute;
+  top: -10px;
+  left: 0;
+
+  cursor: pointer;
+
+  border: solid 1px #ddd;
+  background: #fff;
+  color: #777;
+  padding: 0.15rem 0.3rem;
+}
+
+button.mega-button.set-into {
+  left: 1rem;
+}
+
+.notif-container {
+  position: fixed;
+  top: 1rem;
+  left: 1rem;
+  z-index: 99999;
+  font-family: BlinkMacSystemFont, "Segoe UI", Cantarell, sans-serif;
+  transition: all 150ms;
+  pointer-events: none;
+}
+
+.into {
+  margin-bottom: 0.5rem;
+}
+
+.muted {
+  color: #888;
+}
+
+.commands pre {
+  font-size: 0.85em;
+  font-family: "SF Mono", Menlo, Consolas, "DejaVu Sans Mono", monospace;
+}
+
+.notif {
+  font-size: 0.6em;
+  background: rgba(255, 255, 255, 0.25);
+  border-radius: 0.15rem;
+  padding: 1em;
+  max-width: 45vw;
+  margin-bottom: 1em;
+}
+
+.notif header {
+  font-weight: bold;
+  font-size: 1.2em;
+  margin-bottom: 1em;
+}
+
+.notif p {
+  margin: 0;
+  line-height: 1.3;
+}
+
+.toolbar {
+  margin: 0.5rem 0 0.5rem 0;
+}
+
+#manager {
+  position: fixed;
+  bottom: 1rem;
+  right: 1rem;
+  background: rgba(255, 255, 255, 0.9);
+  border: solid 1px #ddd;
+  padding: 0.5rem;
+  border-radius: 0.15rem;
+
+  max-width: 40vw;
+  overflow: auto;
+}
+
+.hide {
+  display: block;
+}
+
+/*#manager .dupe:hover:after {
+  content: 'Click to remove.';
+  color: #c00;
+}
+*/
+#manager .dupe:hover, #manager .into:hover {
+  cursor: pointer;
+  border-radius: 0.15rem;
+  background: skyblue;
+}
+
+#manager .dupe.delete-on-click:hover { background: pink;  }
