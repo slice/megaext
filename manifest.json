@@ -3,7 +3,7 @@
 
   "name": "Megaext",
   "description": "A helper extension for Custodians in Discord Feedback.",
-  "version": "1.0.1",
+  "version": "1.0.2",
 
   "icons": {
     "16": "assets/megaext_16.png",
