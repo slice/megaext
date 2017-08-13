@@ -1,3 +1,12 @@
+console.log('Megaext: Loaded.')
+
+window.addEventListener('load', () => {
+  mega.load()
+})
+setTimeout(() => {
+  mega.load()
+}, 250)
+
 // Quick and easy element creation
 const c = (name, attrs = '', html = '', bindings = {}) => {
   let elem = document.createElement(name)
@@ -206,7 +215,9 @@ function addDupe (url) {
   return true
 }
 
-const mega = {
+var mega = {
+  loaded: false,
+
   getIdeaUrl (idea) {
     let titleLink = idea.querySelector('.uvIdeaTitle a')
     return titleLink == null ? window.location.href : titleLink.href
@@ -244,16 +255,20 @@ const mega = {
   updateIdeas () {
     let ideas = document.querySelectorAll('.uvIdea')
 
+    console.log('Megaext: Found %d ideas on page.', ideas.length)
+
     for (let idea of ideas) {
       this.setupUvIdea(idea)
     }
   },
 
   load () {
+    if (this.loaded) {
+      console.warn('Megaext has already loaded, refusing to load again.')
+      return
+    }
+    this.loaded = true
     this.updateIdeas()
     this.observe()
   }
 }
-
-// setup megaext once the page has finished loading
-window.addEventListener('load', mega.load.bind(mega))
