@@ -66,4 +66,12 @@ button.mega-button.set-into {
   background: skyblue;
 }
 
-#manager .dupe.delete-on-click:hover { background: pink;  }
+#manager .dupe.delete-on-click:hover {
+  background: pink;
+}
+
+.version {
+  margin-left: 0.15rem;
+  font-size: 0.8em;
+  font-family: monospace;
+}

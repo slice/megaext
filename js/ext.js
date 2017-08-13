@@ -119,6 +119,7 @@ const template = `
     <button type="button" @click="help = !help">
       ?
     </button>
+    <span class="muted version">{{ version }}</span>
   </div>
 `
 document.body.appendChild(c('div', { id: 'manager' }, template))
@@ -138,6 +139,9 @@ let vm = new Vue({
     // Should UV URLs be shortened to IDs and or names only? (Applies both in the dupe manager
     // and in the generated command view)
     short: true,
+
+    // Megaext version
+    version: chrome.runtime.getManifest().version,
 
     // Is the toolbar and "main content window" hidden?
     hidden: false,
